@@ -28,4 +28,7 @@ router.use('/internal', categoryRoute)
 router.use('/internal', settingsRoute)
 router.use('/internal', ordersRoute)
 router.use('/internal', sliderRoute)
-router.use('/internal/uploads', express.static('internal/uploads'));
+router.get('/internal/uploads', (req, res) => {
+    res.json('zopa')
+})
+// router.use('/internal/uploads', express.static('internal/uploads'));
