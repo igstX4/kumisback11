@@ -5,7 +5,7 @@ const checkAuth = (req, res, next) => {
 
     if (!token) {
         return res.status(403).json({
-            message: "Нет доступа",
+            message: "Нет доступа, 1",
         });
     }
     try {
@@ -14,7 +14,7 @@ const checkAuth = (req, res, next) => {
         next();
     } catch (err) {
         return res.status(403).json({
-            message: "Нет доступа",
+            message: "Нет доступа, 2",
         });
     }
 };
