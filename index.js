@@ -8,6 +8,7 @@ import categoryRoute from "./Routes/Category.route.js";
 import settingsRoute from './Routes/Secret.route.js'
 import ordersRoute from "./Routes/Orders.route.js";
 import sliderRoute from "./Routes/Slider.route.js";
+import path from 'path'
 
 dotenv.config()
 mongoose.connect
@@ -29,6 +30,6 @@ router.use('/internal', settingsRoute)
 router.use('/internal', ordersRoute)
 router.use('/internal', sliderRoute)
 router.get('/internal/uploads', (req, res) => {
-    res.json('zopa')
+    res.sendFile(path.join(__dirname, 'internal/uploads'))
 })
 // router.use('/internal/uploads', express.static('internal/uploads'));
