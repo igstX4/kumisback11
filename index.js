@@ -23,14 +23,12 @@ router.use(express.json())
 router.listen(4000, () => {
     console.log('Server OK')
 })
-const __dirname = path.resolve();
 router.use('/internal', productRouter)
 router.use('/internal', adminRouter)
 router.use('/internal', categoryRoute)
 router.use('/internal', settingsRoute)
 router.use('/internal', ordersRoute)
 router.use('/internal', sliderRoute)
-router.get('/internal/uploads', (req, res) => {
-    res.sendFile(path.join(__dirname, 'internal/uploads'))
-})
+const __dirname = path.resolve();
+router.use('/internal/uploads', express.static(path.join(__dirname, 'internal/uploads')));
 // router.use('/internal/uploads', express.static('internal/uploads'));

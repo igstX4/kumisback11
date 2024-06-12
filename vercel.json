@@ -9,7 +9,7 @@
     "routes": [
       {
         "src": "/internal/uploads/(.*)",
-        "dest": "/internal/uploadss"
+        "dest": "/internal/uploads/$1"
       },
       {
      "src": "/(.*)",
