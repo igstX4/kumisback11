@@ -7,10 +7,7 @@
       }
     ],
     "routes": [
-      {
-        "src": "/internal/uploads/(.*)",
-        "dest": "/internal/uploads/$1"
-      },
+
       {
      "src": "/(.*)",
      "dest": "/index.js"
