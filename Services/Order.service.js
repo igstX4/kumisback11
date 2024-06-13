@@ -23,6 +23,15 @@ export const createOrder = async (req, res) => {
         console.log(e)
     }
 }
+export const getOrder = async (req, res) => {
+    try {
+        const {id} = req.params
+        const order = await OrderSchema.findById(id)
+        res.json(order)
+    } catch (e) {
+        res.status(404)
+    }
+}
 export const changeStatus = async (req, res) => {
     try {
         const {id} = req.params

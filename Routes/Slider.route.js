@@ -20,6 +20,7 @@ const upload = multer({storage: storage, limits: { fileSize: undefined }})
 sliderRoute.post('/addItemSlider', checkAuth, upload.single('image'), Slider.AddItemToSlider)
 sliderRoute.put('/editItemSlider', checkAuth, upload.single('image'), Slider.EditItemSlider)
 sliderRoute.get('/getItemSlider', upload.single('image'), Slider.getItem)
+sliderRoute.delete('/slide/:id', checkAuth, Slider.deleteItem)
 
 
 export default sliderRoute

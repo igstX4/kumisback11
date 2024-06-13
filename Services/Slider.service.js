@@ -51,3 +51,10 @@ export const getItem = async (req, res) => {
     const doc = await SliderSchema.findOne({_id: "66601db31d57ef59c79a60e2"})
     res.json(doc)
 }
+export const deleteItem = async (req, res) => {
+    const {id} = req.params
+    const slides = await SliderSchema.find()
+    slides[0].items = slides[0].items.filter((item) => item.id !== id)
+    await slides[0].save()
+    res.status(200).json('nice')
+}
