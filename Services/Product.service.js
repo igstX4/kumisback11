@@ -16,7 +16,7 @@ export const createProduct = async (req, res) => {
         })
 
         const product = await doc.save()
-        res.json(product)
+        res.json('hello')
     } catch (e) {
         console.log(e)
         res.status(500).json({
