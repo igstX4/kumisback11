@@ -17,7 +17,7 @@ mongoose.connect
     .catch((e) => console.log('DB err', e))
 
 const router = express()
-router.use(cors())
+router.use(cors({origin: "https://feeverki-back-vzig.vercel.app"}))
 router.use(express.json())
 
 router.listen(4000, () => {
