@@ -2,18 +2,16 @@ import OrderSchema from "../Models/Order.schema.js";
 
 export const createOrder = async (req, res) => {
     try {
-        const {name, email, phoneNumber, address, note, product, count} = req.body
+        const {name, phoneNumber, address, product, count, products} = req.body
 
         const doc = new OrderSchema({
             name,
-            email,
             phoneNumber,
             address,
-            note,
-            image: req.file.filename,
             product,
             count,
             status: "NEW",
+            products
         })
 
         const order = await doc.save()
@@ -62,7 +60,7 @@ export const deleteOrder = async (req, res) => {
 }
 export const getAllOrders = async (req, res) => {
     try {
-        const orders = await OrderSchema.find().populate('product')
+        const orders = await OrderSchema.find()
 
         return res.json(orders)
     } catch (e) {

@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage, limits: { fileSize: undefined }})
 
-OrdersRoute.post('/order/create', upload.single('image'), OrdersService.createOrder)
+OrdersRoute.post('/order/create', OrdersService.createOrder)
 OrdersRoute.get('/orders', checkAuth, OrdersService.getAllOrders)
 OrdersRoute.get('/order/:id', checkAuth, OrdersService.getOrder)
 OrdersRoute.put('/order/:id', checkAuth, OrdersService.changeStatus)

@@ -6,14 +6,6 @@ const OrderSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        email: {
-            type: String,
-            required: true
-        },
-        image: {
-            type: String,
-            required: true
-        },
         phoneNumber: {
             type: String,
             required: true
@@ -22,15 +14,8 @@ const OrderSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        note: {
-            type: String
-        },
-        product : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
-            required: true
-        },
-        count : Number,
+        products: [],
+        count: Number,
         status: { // inProgress, payed, complete, cancelled
             type: String
         }

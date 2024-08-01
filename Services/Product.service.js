@@ -29,9 +29,14 @@ export const editProduct = async (req, res) => {
     const {id} = req.params;
     const {name, price, priceKiosk, video, options, category,totalCount} = req.body
     try {
-        const product = await ProductModal.findByIdAndUpdate(id, {
-            name, price, priceKiosk, video, totalCount, options: JSON.parse(options), category, image: req.file.filename,
-        }, {new: true});
+            const productData = {name, price, priceKiosk, video, totalCount, options: JSON.parse(options), category}
+
+            if (req.file?.filename) {
+                productData.image = req.file.filename;
+            }
+            const product = await ProductModal.findByIdAndUpdate(id, productData, {new: true});
+        
+        
 
         if (!product) {
             return res.status(404).json({message: "Продукт не найден"});
