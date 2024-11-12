@@ -9,6 +9,7 @@ import settingsRoute from './Routes/Secret.route.js'
 import ordersRoute from "./Routes/Orders.route.js";
 import sliderRoute from "./Routes/Slider.route.js";
 import path from 'path'
+import startTelegramBot from './tgBot.js'
 
 dotenv.config()
 mongoose.connect
@@ -17,6 +18,7 @@ mongoose.connect
     .catch((e) => console.log('DB err', e))
 
 const router = express()
+startTelegramBot()
 router.use(cors({origin: "*"}))
 router.use(express.json())
 
