@@ -18,7 +18,7 @@ mongoose.connect
     .catch((e) => console.log('DB err', e))
 
 const router = express()
-startTelegramBot()
+// startTelegramBot()
 router.use(cors({origin: "*"}))
 router.use(express.json())
 
