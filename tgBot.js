@@ -35,4 +35,4 @@ const startTelegramBot = () => {
     });
 };
 
-module.exports = startTelegramBot;
+export default startTelegramBot
