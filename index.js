@@ -8,8 +8,8 @@ import categoryRoute from "./Routes/Category.route.js";
 import settingsRoute from './Routes/Secret.route.js'
 import ordersRoute from "./Routes/Orders.route.js";
 import sliderRoute from "./Routes/Slider.route.js";
+import discountsRoute from "./Routes/Discounts.route.js";
 import path from 'path'
-import startTelegramBot from './tgBot.js'
 
 dotenv.config()
 mongoose.connect
@@ -31,6 +31,7 @@ router.use('/internal', categoryRoute)
 router.use('/internal', settingsRoute)
 router.use('/internal', ordersRoute)
 router.use('/internal', sliderRoute)
+router.use('/internal', discountsRoute)
 const __dirname = path.resolve();
 router.use('/internal/uploads', express.static(path.join(__dirname, 'internal/uploads')));
 // router.use('/internal/uploads', express.static('internal/uploads'));

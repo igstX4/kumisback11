@@ -1,24 +1,51 @@
 import ProductModal from "../Models/Product.schema.js";
 
 export const createProduct = async (req, res) => {
-    const {name, price, priceKiosk, video, category, options, totalCount} = req.body
-
     try {
-        const doc = new ProductModal({
-            name,
-            price,
-            priceKiosk,
-            video,
+        const productData = {
+            name: req.body.name,
+            price: req.body.price,
+            category: req.body.category,
+            article: req.body.article,
             image: req.file.filename,
-            options: JSON.parse(options),
-            category,
-            totalCount
-        })
+            inStock: req.body.inStock !== undefined ? req.body.inStock : true
+        };
 
-        const product = await doc.save()
-        res.json('hello')
+        // Добавляем поля в зависимости от категории
+        if (['Супер салюты', 'Средние салюты', 'Малые салюты'].includes(req.body.category)) {
+            productData.shots = req.body.shots;
+            productData.caliber = req.body.caliber;
+            productData.duration = req.body.duration;
+        }
+
+        if (['Петарды', 'Рим свечи', 'Ракеты', 'Бенгальские огни'].includes(req.body.category)) {
+            productData.packQuantity = req.body.packQuantity;
+        }
+
+        if (['Петарды', 'Рим свечи'].includes(req.body.category)) {
+            productData.effect = req.body.effect;
+        }
+
+        if (req.body.category === 'Фонтаны') {
+            productData.height = req.body.height;
+            productData.video = req.body.video;
+        }
+
+        if (req.body.category === 'Бенгальские огни') {
+            productData.length = req.body.length;
+            productData.duration = req.body.duration;
+            productData.video = req.body.video;
+        }
+
+        if (req.body.category === 'Ракеты') {
+            productData.video = req.body.video;
+        }
+
+        const doc = new ProductModal(productData);
+        const product = await doc.save();
+        res.json(product);
     } catch (e) {
-        console.log(e)
+        console.log(e);
         res.status(500).json({
             message: 'Не удалось создать продукт',
         });
@@ -26,30 +53,74 @@ export const createProduct = async (req, res) => {
 }
 
 export const editProduct = async (req, res) => {
-    const {id} = req.params;
-    const {name, price, priceKiosk, video, options, category,totalCount} = req.body
     try {
-            const productData = {name, price, priceKiosk, video, totalCount, options: JSON.parse(options), category}
+        const productId = req.params.id;
+        const {
+            name, price, oldPrice, category, article, shots, 
+            caliber, duration, packQuantity, effect, height, 
+            length, video, inStock
+        } = req.body;
 
-            if (req.file?.filename) {
-                productData.image = req.file.filename;
-            }
-            const product = await ProductModal.findByIdAndUpdate(id, productData, {new: true});
-        
-        
+        const updateData = {
+            name,
+            price,
+            category,
+            article,
+            oldPrice: oldPrice || null,
+            inStock: inStock !== undefined ? inStock : true
+        };
 
-        if (!product) {
-            return res.status(404).json({message: "Продукт не найден"});
+        // Если загружено новое изображение
+        if (req.file) {
+            updateData.image = req.file.filename;
         }
 
-        res.json(product);
+        // Добавляем поля в зависимости от категории
+        if (['Супер салюты', 'Средние салюты', 'Малые салюты'].includes(category)) {
+            updateData.shots = shots;
+            updateData.caliber = caliber;
+            updateData.duration = duration;
+        }
 
-    } catch (e) {
-        console.log(e);
-        res.status(500).json({message: "Не удалось обновить продукт"});
+        if (['Петарды', 'Рим свечи', 'Ракеты', 'Бенгальские огни'].includes(category)) {
+            updateData.packQuantity = packQuantity;
+        }
+
+        if (['Петарды', 'Рим свечи'].includes(category)) {
+            updateData.effect = effect;
+        }
+
+        if (category === 'Фонтаны') {
+            updateData.height = height;
+            updateData.video = video;
+        }
+
+        if (category === 'Бенгальские огни') {
+            updateData.length = length;
+            updateData.duration = duration;
+            updateData.video = video;
+        }
+
+        if (category === 'Ракеты') {
+            updateData.video = video;
+        }
+
+        const updatedProduct = await ProductModal.findByIdAndUpdate(
+            productId,
+            updateData,
+            { new: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: 'Продукт не найден' });
+        }
+
+        res.json(updatedProduct);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Не удалось обновить продукт' });
     }
 };
-
 
 export const deleteProduct = async (req, res) => {
     try {
