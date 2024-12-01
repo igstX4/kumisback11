@@ -33,6 +33,11 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    video: {
+        type: String,
+        required: false,
+        default: ''
+    },
     // Поля для фейерверков
     shots: {
         type: Number,
@@ -77,13 +82,6 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: function() {
             return this.category === 'Бенгальские огни';
-        }
-    },
-    // Видео для определенных категорий
-    video: {
-        type: String,
-        required: function() {
-            return ['Фонтаны', 'Бенгальские огни', 'Ракеты'].includes(this.category);
         }
     }
 });

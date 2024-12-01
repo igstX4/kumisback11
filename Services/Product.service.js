@@ -5,10 +5,12 @@ export const createProduct = async (req, res) => {
         const productData = {
             name: req.body.name,
             price: req.body.price,
+            oldPrice: req.body.oldPrice || null,
+            inStock: req.body.inStock !== undefined ? req.body.inStock : true,
             category: req.body.category,
             article: req.body.article,
             image: req.file.filename,
-            inStock: req.body.inStock !== undefined ? req.body.inStock : true
+            video: req.body.video || ''
         };
 
         // Добавляем поля в зависимости от категории
@@ -28,17 +30,11 @@ export const createProduct = async (req, res) => {
 
         if (req.body.category === 'Фонтаны') {
             productData.height = req.body.height;
-            productData.video = req.body.video;
         }
 
         if (req.body.category === 'Бенгальские огни') {
             productData.length = req.body.length;
             productData.duration = req.body.duration;
-            productData.video = req.body.video;
-        }
-
-        if (req.body.category === 'Ракеты') {
-            productData.video = req.body.video;
         }
 
         const doc = new ProductModal(productData);
@@ -67,7 +63,8 @@ export const editProduct = async (req, res) => {
             category,
             article,
             oldPrice: oldPrice || null,
-            inStock: inStock !== undefined ? inStock : true
+            inStock: inStock !== undefined ? inStock : true,
+            video: video || ''
         };
 
         // Если загружено новое изображение
@@ -92,17 +89,11 @@ export const editProduct = async (req, res) => {
 
         if (category === 'Фонтаны') {
             updateData.height = height;
-            updateData.video = video;
         }
 
         if (category === 'Бенгальские огни') {
             updateData.length = length;
             updateData.duration = duration;
-            updateData.video = video;
-        }
-
-        if (category === 'Ракеты') {
-            updateData.video = video;
         }
 
         const updatedProduct = await ProductModal.findByIdAndUpdate(
