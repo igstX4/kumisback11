@@ -1,7 +1,17 @@
 import OrderSchema from "../Models/Order.schema.js";
+import nodemailer from "nodemailer";
 
 export const createOrder = async (req, res) => {
     try {
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.yandex.ru',
+            port: "465",
+            secure: true,
+            auth: {
+                user: "kashamuchi@yandex.com",
+                pass: "jphzldrcskhvjvcr",
+            },
+        });
         const {name, phoneNumber, address, product, count, products} = req.body
 
         const doc = new OrderSchema({
@@ -13,7 +23,14 @@ export const createOrder = async (req, res) => {
             status: "NEW",
             products
         })
-
+        transporter.sendMail({
+            from: "kashamuchi@yandex.com",
+            to: "5533885@mail.ru",
+            subject: "Новый заказ",
+            html: `<b>Имя:</b> ${name} <br><b>Телефон:</b> ${phoneNumber} <br><b>Адрес:</b> ${address} <br><b>Товары:</b> ${products.map(item => 
+                `<br>Название: <i>${item.title}</i> | Количество: ${item.quantity} | Цена: ${item.price} | Сумма: ${item.totalPrice}`
+            ).join('')}`,
+        })
         const order = await doc.save()
 
         return res.status(200).json(order)
