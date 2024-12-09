@@ -25,7 +25,7 @@ export const createOrder = async (req, res) => {
         })
         transporter.sendMail({
             from: "kashamuchi@yandex.com",
-            to: "iror200895@gmail.com",
+            to: "5533885@mail.ru",
             subject: "Новый заказ",
             html: `<b>Имя:</b> ${name} <br><b>Телефон:</b> ${phoneNumber} <br><b>Адрес:</b> ${address} <br><b>Товары:</b> ${products.map(item => 
                 `<br>Название: <i>${item.title}</i> | Количество: ${item.quantity} | Цена: ${item.price} | Сумма: ${item.totalPrice}`
