@@ -14,18 +14,12 @@ export const createProduct = async (req, res) => {
         };
 
         // Добавляем поля в зависимости от категории
-        if (['Супер салюты', 'Средние салюты', 'Малые салюты'].includes(req.body.category)) {
-            productData.shots = req.body.shots;
+        if (['Супер салюты', 'Средние салюты', 'Малые салюты', 'Рим свечи'].includes(req.body.category)) {
             productData.caliber = req.body.caliber;
-            productData.duration = req.body.duration;
         }
 
         if (['Петарды', 'Рим свечи', 'Ракеты', 'Бенгальские огни'].includes(req.body.category)) {
             productData.packQuantity = req.body.packQuantity;
-        }
-
-        if (['Петарды', 'Рим свечи'].includes(req.body.category)) {
-            productData.effect = req.body.effect;
         }
 
         if (req.body.category === 'Фонтаны') {
@@ -53,7 +47,7 @@ export const editProduct = async (req, res) => {
         const productId = req.params.id;
         const {
             name, price, oldPrice, category, article, shots, 
-            caliber, duration, packQuantity, effect, height, 
+            caliber, duration, packQuantity, height, 
             length, video, inStock
         } = req.body;
 
@@ -73,18 +67,12 @@ export const editProduct = async (req, res) => {
         }
 
         // Добавляем поля в зависимости от категории
-        if (['Супер салюты', 'Средние салюты', 'Малые салюты'].includes(category)) {
-            updateData.shots = shots;
+        if (['Супер салюты', 'Средние салюты', 'Малые салюты', 'Рим свечи'].includes(category)) {
             updateData.caliber = caliber;
-            updateData.duration = duration;
         }
 
         if (['Петарды', 'Рим свечи', 'Ракеты', 'Бенгальские огни'].includes(category)) {
             updateData.packQuantity = packQuantity;
-        }
-
-        if (['Петарды', 'Рим свечи'].includes(category)) {
-            updateData.effect = effect;
         }
 
         if (category === 'Фонтаны') {

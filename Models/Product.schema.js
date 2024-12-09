@@ -48,7 +48,7 @@ const ProductSchema = new mongoose.Schema({
     caliber: {
         type: String,
         required: function() {
-            return ['Супер салюты', 'Средние салюты', 'Малые салюты'].includes(this.category);
+            return ['Супер салюты', 'Средние салюты', 'Малые салюты', 'Рим свечи'].includes(this.category);
         }
     },
     duration: {
@@ -62,12 +62,6 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: function() {
             return ['Петарды', 'Рим свечи', 'Ракеты', 'Бенгальские огни'].includes(this.category);
-        }
-    },
-    effect: {
-        type: String,
-        required: function() {
-            return ['Петарды', 'Рим свечи'].includes(this.category);
         }
     },
     // Поля для фонтанов
